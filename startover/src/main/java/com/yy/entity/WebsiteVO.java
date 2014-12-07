@@ -11,7 +11,7 @@ package com.yy.entity;
 public class WebsiteVO {
 	// 网站地址
 	private String ipAddess;
-
+	// 需要下载内容的基本url
 	private String baseUrl;
 
 	// TODO sapphire
