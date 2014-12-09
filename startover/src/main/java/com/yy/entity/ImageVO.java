@@ -16,11 +16,13 @@ public class ImageVO {
 	// 图片地址是否为绝对路径,绝对路径带有IP,相对路径不带IP
 	private boolean isObsolute;
 	// 图片所属的网址
-	private String ipAddress;
+	private String belongAddress;
 	// 图片的数据流(下载之后才有)
 	private InputStream io;
 	// 图片存放位置
 	private String folder;
+	// 尝试次数
+	private Integer retryTimes;
 
 	public String getUrl() {
 		return url;
@@ -38,12 +40,12 @@ public class ImageVO {
 		this.isObsolute = isObsolute;
 	}
 
-	public String getIpAddress() {
-		return ipAddress;
+	public String getBelongAddress() {
+		return belongAddress;
 	}
 
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
+	public void setBelongAddress(String belongAddress) {
+		this.belongAddress = belongAddress;
 	}
 
 	public InputStream getIo() {
@@ -62,4 +64,11 @@ public class ImageVO {
 		this.folder = folder;
 	}
 
+	public Integer getRetryTimes() {
+		return retryTimes;
+	}
+
+	public void setRetryTimes(Integer retryTimes) {
+		this.retryTimes = retryTimes;
+	}
 }
