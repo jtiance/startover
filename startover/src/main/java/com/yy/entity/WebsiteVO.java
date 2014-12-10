@@ -13,10 +13,10 @@ public class WebsiteVO {
 	private String ipAddess;
 	// 需要下载内容的基本uri
 	private String uri;
-	// 是否包含索引号
-	private boolean hasIndex;
-	// 是否包含图片
-	private boolean hasImage;
+	// 是否是BBS网站
+	private boolean bbs;
+	// uri的开始数字
+	private int startNum;
 	// 包含图片的地址的正则表达式(如果不包含图片,则需要指定此正则表达式)
 	private String regExp;
 
@@ -36,20 +36,20 @@ public class WebsiteVO {
 		this.uri = uri;
 	}
 
-	public boolean isHasIndex() {
-		return hasIndex;
+	public boolean isBbs() {
+		return bbs;
 	}
 
-	public void setHasIndex(boolean hasIndex) {
-		this.hasIndex = hasIndex;
+	public void setBbs(boolean bbs) {
+		this.bbs = bbs;
 	}
 
-	public boolean isHasImage() {
-		return hasImage;
+	public int getStartNum() {
+		return startNum;
 	}
 
-	public void setHasImage(boolean hasImage) {
-		this.hasImage = hasImage;
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
 	}
 
 	public String getRegExp() {
