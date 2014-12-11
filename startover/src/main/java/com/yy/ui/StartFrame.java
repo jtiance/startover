@@ -2,6 +2,7 @@ package com.yy.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -14,7 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.border.LineBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 
 import com.yy.ui.utils.GBC;
 
@@ -43,11 +50,15 @@ public class StartFrame extends JFrame {
 	private JLabel regexpLabel;
 	// 正则表达式
 	private JTextField regexpText;
+	// 路径树
+	private JTree addressTree;
 
 	public StartFrame() {
 
 		initUI();
 		initEvent();
+
+		pack();
 	}
 
 	/**
@@ -78,6 +89,7 @@ public class StartFrame extends JFrame {
 			}
 
 		});
+
 	}
 
 	private void setComponentEnabled(boolean flag) {
@@ -120,84 +132,93 @@ public class StartFrame extends JFrame {
 		JPanel line1 = new JPanel();
 		line1.setLayout(new GridBagLayout());
 
+		GBC gbc = null;
+
 		north.add(line1);
 		{
-			line1.add(
-					new JLabel("网址:"),
-					newGBC(1, 1, 1, 1, 0, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 10,
-							2, 2, 10, 0));
-			addressText = new JTextField();
-			line1.add(
-					addressText,
-					newGBC(2, 1, 1, 1, 90, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
-							2, 5, 0, 0));
-			line1.add(
-					new JLabel("URI:"),
-					newGBC(3, 1, 1, 1, 0, 0, GBC.HORIZONTAL, GBC.EAST, 5, 5, 2,
-							2, 10, 0));
-			uriText = new JTextField();
-			line1.add(
-					uriText,
-					newGBC(4, 1, 1, 1, 90, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
-							2, 5, 0, 0));
+			gbc = newGBC(1, 1, 1, 1, 0, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 10,
+					2, 2, 10, 0);
+			line1.add(new JLabel("网址:"), gbc);
+
+			gbc = newGBC(2, 1, 1, 1, 90, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
+					2, 5, 0, 0);
+			line1.add(addressText = new JTextField(), gbc);
+
+			gbc = newGBC(3, 1, 1, 1, 0, 0, GBC.HORIZONTAL, GBC.EAST, 5, 5, 2,
+					2, 10, 0);
+			line1.add(new JLabel("URI:"), gbc);
+
+			gbc = newGBC(4, 1, 1, 1, 90, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
+					2, 5, 0, 0);
+			line1.add(uriText = new JTextField(), gbc);
 		}
 
 		JPanel line2 = new JPanel();
 		line2.setLayout(new GridBagLayout());
 		north.add(line2);
 		{
-			bbsCheckBox = new JCheckBox("是否为BBS站点");
-			line2.add(
-					bbsCheckBox,
-					newGBC(1, 1, 1, 1, 0, 0, GBC.NONE, GBC.WEST, 2, 5, 2, 5, 0,
-							0));
-			line2.add(
-					new JLabel(),
-					newGBC(2, 1, 1, 1, 100, 0, GBC.HORIZONTAL, GBC.CENTER, 2,
-							5, 2, 5, 0, 0));
+			gbc = newGBC(1, 1, 1, 1, 0, 0, GBC.NONE, GBC.WEST, 2, 5, 2, 5, 0, 0);
+			line2.add(bbsCheckBox = new JCheckBox("是否为BBS站点"), gbc);
 
+			gbc = newGBC(2, 1, 1, 1, 100, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
+					2, 5, 0, 0);
+			line2.add(new JLabel(), gbc);
 		}
 		{
 			JPanel line3 = new JPanel();
 			line3.setLayout(new GridBagLayout());
 			north.add(line3);
+
 			ButtonGroup group = new ButtonGroup();
-			up = new JRadioButton("索引递增");
+			group.add(up = new JRadioButton("索引递增"));
+			group.add(down = new JRadioButton("索引递减"));
 			up.setSelected(true);
-			down = new JRadioButton("索引递减");
-			group.add(up);
-			group.add(down);
-			line3.add(
-					up,
-					newGBC(1, 1, 1, 1, 0, 0, GBC.NONE, GBC.WEST, 2, 5, 5, 2, 0,
-							0));
-			line3.add(
-					down,
-					newGBC(2, 1, 1, 1, 5, 0, GBC.NONE, GBC.WEST, 2, 2, 5, 5,
-							20, 0));
-			line3.add(
-					regexpLabel = new JLabel("子链接正则表达式:"),
-					newGBC(3, 1, 1, 1, 0, 0, GBC.NONE, GBC.CENTER, 2, 2, 5, 5,
-							0, 0));
-			regexpText = new JTextField();
-			line3.add(
-					regexpText,
-					newGBC(4, 1, 1, 1, 50, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
-							5, 5, 0, 0));
-			line3.add(
-					new JLabel(),
-					newGBC(5, 1, 4, 1, 75, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
-							5, 5, 0, 0));
+
+			gbc = newGBC(1, 1, 1, 1, 0, 0, GBC.NONE, GBC.WEST, 2, 5, 5, 2, 0, 0);
+			line3.add(up, gbc);
+
+			gbc = newGBC(2, 1, 1, 1, 5, 0, GBC.NONE, GBC.WEST, 2, 2, 5, 5, 20,
+					0);
+			line3.add(down, gbc);
+
+			gbc = newGBC(3, 1, 1, 1, 0, 0, GBC.NONE, GBC.CENTER, 2, 2, 5, 5, 0,
+					0);
+			line3.add(regexpLabel = new JLabel("子链接正则表达式:"), gbc);
+
+			gbc = newGBC(4, 1, 1, 1, 50, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
+					5, 5, 0, 0);
+			line3.add(regexpText = new JTextField(), gbc);
+
+			gbc = newGBC(5, 1, 4, 1, 75, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
+					5, 5, 0, 0);
+			line3.add(new JLabel(), gbc);
 		}
 
 		return north;
 	}
 
-	private JPanel getWest() {
-		JPanel west = new JPanel();
-		west.setBackground(Color.BLUE);
+	private JScrollPane getWest() {
+		addressTree = new JTree();
+		JScrollPane west = new JScrollPane(addressTree);
+		west.setPreferredSize(new Dimension(200, 500));
+		west.setBorder(new LineBorder(Color.GRAY, 2));
+
+		DefaultTreeModel model = new DefaultTreeModel(getTreeNode());
+		addressTree.setModel(model);
 
 		return west;
+	}
+
+	private TreeNode getTreeNode() {
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("结果");
+		root.add(new DefaultMutableTreeNode("USA"));
+		root.add(new DefaultMutableTreeNode("CHINA"));
+		root.add(new DefaultMutableTreeNode("JAPAN"));
+		root.add(new DefaultMutableTreeNode("UK"));
+		root.add(new DefaultMutableTreeNode("RUSSIAN"));
+		root.add(new DefaultMutableTreeNode("FRANCE"));
+
+		return root;
 	}
 
 	private JPanel getCenter() {
