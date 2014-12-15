@@ -9,5 +9,12 @@ import java.io.File;
  *
  */
 public interface ImageDownloadService {
+	/**
+	 * 下载文件
+	 * 
+	 * @param folder
+	 * @param str
+	 * @return
+	 */
 	public boolean downloadImage(File folder, String str);
 }
