@@ -14,12 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import com.yy.service.ImageDownloadService;
 import com.yy.utils.StreamUtils;
 
-/**
- * 下载
- * 
- * @author Administrator
- *
- */
 public class ImageDownloadServiceImpl implements ImageDownloadService {
 	public static void main(String[] args) {
 		// downloadImage(
