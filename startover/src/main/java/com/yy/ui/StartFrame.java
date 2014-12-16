@@ -19,9 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.border.LineBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import com.yy.ui.utils.GBC;
 
@@ -87,8 +91,9 @@ public class StartFrame extends JFrame {
 				JCheckBox checkBox = (JCheckBox) e.getSource();
 				setComponentEnabled(checkBox.isSelected());
 			}
-
 		});
+
+		addressTree.addTreeSelectionListener(new TreeSelectedListener());
 
 	}
 
@@ -206,6 +211,10 @@ public class StartFrame extends JFrame {
 		DefaultTreeModel model = new DefaultTreeModel(getTreeNode());
 		addressTree.setModel(model);
 
+		// 设置选择方式为单选
+		addressTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
+
 		return west;
 	}
 
@@ -251,4 +260,28 @@ public class StartFrame extends JFrame {
 		});
 	}
 
+	/**
+	 * 
+	 * Desc: Tree Selected Listener
+	 *
+	 * @author Sapphire
+	 *
+	 * @Since 创建时间:2014年12月14日 下午8:54:19
+	 */
+	private class TreeSelectedListener implements TreeSelectionListener {
+		public void valueChanged(TreeSelectionEvent e) {
+			TreePath path = addressTree.getSelectionPath();
+			if (path == null) {
+				System.out.println("path is null");
+				return;
+			}
+
+			DefaultMutableTreeNode nd = (DefaultMutableTreeNode) path
+					.getLastPathComponent();
+
+			System.out.println(nd.getUserObject());
+
+			// TODO sapphire: tree select: display content.
+		}
+	}
 }
