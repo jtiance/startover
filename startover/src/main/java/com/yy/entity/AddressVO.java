@@ -2,23 +2,25 @@ package com.yy.entity;
 
 /**
  * 
- * Desc: 网站信息
+ * Desc: web路径信息
  *
  * @author Sapphire
  *
  * @Since 创建时间:2014年12月7日 下午10:02:09
  */
-public class WebsiteVO {
+public class AddressVO {
 	// 网站地址
-	private String ipAddess;
+	protected String ipAddess;
 	// 需要下载内容的基本uri
-	private String uri;
+	protected String uri;
 	// 是否是BBS网站
-	private boolean bbs;
+	protected boolean bbs;
 	// uri的开始数字
-	private int startNum;
+	protected int startNum;
 	// 包含图片的地址的正则表达式(如果不包含图片,则需要指定此正则表达式)
-	private String regExp;
+	protected String regExp;
+	// 是否为包含address的address
+	protected boolean isAddressWithAddressVO;
 
 	public String getIpAddess() {
 		return ipAddess;
@@ -60,4 +62,11 @@ public class WebsiteVO {
 		this.regExp = regExp;
 	}
 
+	public boolean isAddressWithAddressVO() {
+		return isAddressWithAddressVO;
+	}
+
+	public void setAddressWithAddressVO(boolean isAddressWithAddressVO) {
+		this.isAddressWithAddressVO = isAddressWithAddressVO;
+	}
 }

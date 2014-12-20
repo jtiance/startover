@@ -2,6 +2,7 @@ package com.yy.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
@@ -17,16 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTree;
 import javax.swing.border.LineBorder;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
+import com.yy.ui.download.AddressTree;
 import com.yy.ui.utils.GBC;
 
 /**
@@ -54,8 +48,9 @@ public class StartFrame extends JFrame {
 	private JLabel regexpLabel;
 	// 正则表达式
 	private JTextField regexpText;
-	// 路径树
-	private JTree addressTree;
+
+	// 树的容器
+	AddressTree tree;
 
 	public StartFrame() {
 
@@ -92,8 +87,6 @@ public class StartFrame extends JFrame {
 				setComponentEnabled(checkBox.isSelected());
 			}
 		});
-
-		addressTree.addTreeSelectionListener(new TreeSelectedListener());
 
 	}
 
@@ -202,32 +195,14 @@ public class StartFrame extends JFrame {
 		return north;
 	}
 
-	private JScrollPane getWest() {
-		addressTree = new JTree();
-		JScrollPane west = new JScrollPane(addressTree);
-		west.setPreferredSize(new Dimension(200, 500));
-		west.setBorder(new LineBorder(Color.GRAY, 2));
+	private Component getWest() {
+		AddressTree tree = new AddressTree();
+		JScrollPane pane = new JScrollPane(tree);
+		pane.setPreferredSize(new Dimension(200, 500));
+		pane.setBorder(new LineBorder(Color.GRAY, 2));
+		pane.setBackground(Color.RED);
 
-		DefaultTreeModel model = new DefaultTreeModel(getTreeNode());
-		addressTree.setModel(model);
-
-		// 设置选择方式为单选
-		addressTree.getSelectionModel().setSelectionMode(
-				TreeSelectionModel.SINGLE_TREE_SELECTION);
-
-		return west;
-	}
-
-	private TreeNode getTreeNode() {
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("结果");
-		root.add(new DefaultMutableTreeNode("USA"));
-		root.add(new DefaultMutableTreeNode("CHINA"));
-		root.add(new DefaultMutableTreeNode("JAPAN"));
-		root.add(new DefaultMutableTreeNode("UK"));
-		root.add(new DefaultMutableTreeNode("RUSSIAN"));
-		root.add(new DefaultMutableTreeNode("FRANCE"));
-
-		return root;
+		return pane;
 	}
 
 	private JPanel getCenter() {
@@ -260,28 +235,4 @@ public class StartFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * 
-	 * Desc: Tree Selected Listener
-	 *
-	 * @author Sapphire
-	 *
-	 * @Since 创建时间:2014年12月14日 下午8:54:19
-	 */
-	private class TreeSelectedListener implements TreeSelectionListener {
-		public void valueChanged(TreeSelectionEvent e) {
-			TreePath path = addressTree.getSelectionPath();
-			if (path == null) {
-				System.out.println("path is null");
-				return;
-			}
-
-			DefaultMutableTreeNode nd = (DefaultMutableTreeNode) path
-					.getLastPathComponent();
-
-			System.out.println(nd.getUserObject());
-
-			// TODO sapphire: tree select: display content.
-		}
-	}
 }
