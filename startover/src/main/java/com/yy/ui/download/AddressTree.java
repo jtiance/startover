@@ -7,14 +7,12 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.yy.entity.AddressVO;
 import com.yy.entity.AddressWithAddressVO;
-import com.yy.entity.AddressWithImageVO;
 
 public class AddressTree extends JTree {
 

@@ -5,12 +5,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,6 +23,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.yy.ui.download.AddressTree;
 import com.yy.ui.utils.GBC;
@@ -34,6 +40,8 @@ import com.yy.ui.utils.GBC;
 public class StartFrame extends JFrame {
 
 	private static final long serialVersionUID = -8921185454921189650L;
+
+	private static final Dimension BTN_DEMISION = new Dimension(100, 25);
 	// IP
 	private JTextField addressText;
 	// URI
@@ -48,6 +56,8 @@ public class StartFrame extends JFrame {
 	private JLabel regexpLabel;
 	// 正则表达式
 	private JTextField regexpText;
+
+	private JButton searchBtn;
 
 	// 树的容器
 	AddressTree tree;
@@ -220,8 +230,15 @@ public class StartFrame extends JFrame {
 	}
 
 	private JPanel getSouth() {
-		JPanel south = new JPanel();
+		FlowLayout flowLayout = new FlowLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+
+		JPanel south = new JPanel(flowLayout);
 		south.setBackground(Color.GREEN);
+
+		JButton searchBtn = new JButton(new SearchAction());
+		searchBtn.setPreferredSize(BTN_DEMISION);
+		south.add(searchBtn);
 
 		return south;
 	}
@@ -235,4 +252,23 @@ public class StartFrame extends JFrame {
 		});
 	}
 
+	private class SearchAction extends AbstractAction {
+
+		private static final long serialVersionUID = 7604563573223990549L;
+
+		public SearchAction() {
+			putValue(Action.NAME, "搜索");
+			putValue(Action.SHORT_DESCRIPTION, "搜索给定网址中的包含图片的网址或(和)给定的网址中的图片");
+
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			String url = addressText.getText()
+					+ (StringUtils.isBlank(uriText.getText()) ? "" : "?"
+							+ uriText.getText());
+
+			
+		}
+
+	}
 }
