@@ -9,10 +9,14 @@ package com.yy.entity;
  * @Since 创建时间:2014年12月7日 下午10:02:09
  */
 public class AddressVO {
-	// 网站地址
-	protected String ipAddess;
-	// 需要下载内容的基本uri
-	protected String uri;
+
+	public static final String REPLACEMENT = "[REPLACEMENT]";
+	// 域或ip
+	protected String ip;
+	// 网址
+	protected String url;
+	// 需要下载内容的基本的key
+	protected String replacement;
 	// 是否是BBS网站
 	protected boolean bbs;
 	// uri的开始数字
@@ -20,22 +24,30 @@ public class AddressVO {
 	// 包含图片的地址的正则表达式(如果不包含图片,则需要指定此正则表达式)
 	protected String regExp;
 	// 是否为包含address的address
-	protected boolean isAddressWithAddressVO;
+	protected boolean hasImage;
 
-	public String getIpAddess() {
-		return ipAddess;
+	public String getIp() {
+		return ip;
 	}
 
-	public void setIpAddess(String ipAddess) {
-		this.ipAddess = ipAddess;
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
-	public String getUri() {
-		return uri;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getReplacement() {
+		return replacement;
+	}
+
+	public void setReplacement(String replacement) {
+		this.replacement = replacement;
 	}
 
 	public boolean isBbs() {
@@ -62,11 +74,16 @@ public class AddressVO {
 		this.regExp = regExp;
 	}
 
-	public boolean isAddressWithAddressVO() {
-		return isAddressWithAddressVO;
+	public boolean isHasImage() {
+		return hasImage;
 	}
 
-	public void setAddressWithAddressVO(boolean isAddressWithAddressVO) {
-		this.isAddressWithAddressVO = isAddressWithAddressVO;
+	public void setHasImage(boolean hasImage) {
+		this.hasImage = hasImage;
 	}
+
+	public String getRealUrl() {
+		return this.url.replace(REPLACEMENT, replacement);
+	}
+
 }

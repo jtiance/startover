@@ -6,7 +6,7 @@ import java.util.List;
 public class AddressWithAddressVO extends AddressVO {
 
 	public AddressWithAddressVO() {
-		super.isAddressWithAddressVO = true;
+		super.hasImage = false;
 	}
 
 	private List<AddressVO> addressVOs;

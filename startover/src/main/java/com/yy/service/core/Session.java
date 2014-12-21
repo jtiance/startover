@@ -1,4 +1,4 @@
-package com.yy.service;
+package com.yy.service.core;
 
 /**
  * 

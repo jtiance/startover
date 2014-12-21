@@ -3,10 +3,10 @@ package com.yy.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressWithImageVO extends AddressVO {
+public class AddressWithImageVO extends AddressWithAddressVO {
 
 	public AddressWithImageVO() {
-		super.isAddressWithAddressVO = false;
+		super.hasImage = true;
 	}
 
 	private String name;

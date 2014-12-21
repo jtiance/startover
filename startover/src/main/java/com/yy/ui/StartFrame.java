@@ -24,8 +24,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import org.apache.commons.lang3.StringUtils;
-
+import com.yy.entity.AddressVO;
+import com.yy.entity.AddressWithAddressVO;
+import com.yy.entity.AddressWithImageVO;
+import com.yy.service.TravelService;
+import com.yy.service.core.AppCtx;
 import com.yy.ui.download.AddressTree;
 import com.yy.ui.utils.GBC;
 
@@ -148,17 +151,23 @@ public class StartFrame extends JFrame {
 					2, 2, 10, 0);
 			line1.add(new JLabel("网址:"), gbc);
 
-			gbc = newGBC(2, 1, 1, 1, 90, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
+			gbc = newGBC(2, 1, 1, 1, 100, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
 					2, 5, 0, 0);
 			line1.add(addressText = new JTextField(), gbc);
+			addressText
+					.setToolTipText("需要替换的位置以[REPLACEMENT]取代,如:http://www.itpub.net/zhuanti/1024/corejfc_[REPLACEMENT].shtml");
+			addressText
+					.setText("http://pejnya.net/content/photo.php?news=izobrajeniya_i_ne_tolko_[REPLACEMENT]");
 
 			gbc = newGBC(3, 1, 1, 1, 0, 0, GBC.HORIZONTAL, GBC.EAST, 5, 5, 2,
 					2, 10, 0);
-			line1.add(new JLabel("URI:"), gbc);
+			line1.add(new JLabel("替换内容:"), gbc);
 
-			gbc = newGBC(4, 1, 1, 1, 90, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
+			gbc = newGBC(4, 1, 1, 1, 50, 0, GBC.HORIZONTAL, GBC.CENTER, 5, 2,
 					2, 5, 0, 0);
 			line1.add(uriText = new JTextField(), gbc);
+			uriText.setToolTipText("需要替换掉[REPLACEMENT]位置的信息");
+			uriText.setText("69");
 		}
 
 		JPanel line2 = new JPanel();
@@ -191,11 +200,13 @@ public class StartFrame extends JFrame {
 
 			gbc = newGBC(3, 1, 1, 1, 0, 0, GBC.NONE, GBC.CENTER, 2, 2, 5, 5, 0,
 					0);
-			line3.add(regexpLabel = new JLabel("子链接正则表达式:"), gbc);
+			line3.add(regexpLabel = new JLabel("子链接规则:"), gbc);
 
 			gbc = newGBC(4, 1, 1, 1, 50, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
 					5, 5, 0, 0);
 			line3.add(regexpText = new JTextField(), gbc);
+			regexpText
+					.setToolTipText("需要替换的位置以[REPLACEMENT]取代,如:http://www.itpub.net/zhuanti/1024/corejfc_[REPLACEMENT].shtml");
 
 			gbc = newGBC(5, 1, 4, 1, 75, 0, GBC.HORIZONTAL, GBC.CENTER, 2, 5,
 					5, 5, 0, 0);
@@ -263,12 +274,27 @@ public class StartFrame extends JFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			String url = addressText.getText()
-					+ (StringUtils.isBlank(uriText.getText()) ? "" : "?"
-							+ uriText.getText());
+			AddressVO addressVO = null;
+			if (bbsCheckBox.isSelected()) {
+				addressVO = new AddressWithAddressVO();
+				// bbs的根页面不包含图片
+				addressVO.setHasImage(false);
+			} else {
+				addressVO = new AddressWithImageVO();
+				addressVO.setHasImage(true);
+			}
+			addressVO.setUrl(addressText.getText());
+			addressVO.setReplacement(uriText.getText());
+			// TODO 针对bbs添加相应的参数
 
-			
+			TravelService service = AppCtx.getInstance().getBean(
+					TravelService.class);
+			try {
+				service.getAddressVO(addressVO);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			System.out.println();
 		}
-
 	}
 }

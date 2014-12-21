@@ -94,7 +94,7 @@ public class AddressTree extends JTree {
 		}
 
 		public boolean isLeaf(Object node) {
-			return !((AddressVO) node).isAddressWithAddressVO();
+			return ((AddressVO) node).isHasImage();
 		}
 
 		public void valueForPathChanged(TreePath path, Object newValue) {
