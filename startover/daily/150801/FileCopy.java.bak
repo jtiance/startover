@@ -1,0 +1,14 @@
+import java.io.*;
+
+public class FileCopy{
+	public static void main(String[] args){
+		FileReader 
+}		fw.close();
+				}catch(IOException e){
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	
+	}

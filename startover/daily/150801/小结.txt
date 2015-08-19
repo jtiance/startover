@@ -1,0 +1,22 @@
+二进制字节(8位)
+InputStream
+	FileInputStream
+	BufferedInputStream
+	ObjectInputStream
+
+OutputStream
+	FileOutputStream
+	BufferedOutputStream
+	ObjectOutputStream
+
+	
+	
+	
+Unicode字符(16位)
+Reader
+	FileReader
+	BufferedReader
+	
+Writer 
+	FileWriter
+	BufferedWriter
